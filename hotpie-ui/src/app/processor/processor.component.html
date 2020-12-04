@@ -1,0 +1,191 @@
+<!-- <div class="main-container"
+    style="width: 100%;background-image: url(../../assets/background-3.svg);background-color: rgba(255,255,255,0.6);background-blend-mode: lighten;background-repeat: repeat;">-->
+<clr-main-container style="width: 100%;background-color: rgba(255,255,255,0.6);background-blend-mode: lighten">
+    <section
+        style="padding: 24px;background: linear-gradient(to top right, #99ccff 0%, #ffcc99 100%);background-blend-mode: lighten;background-position: center;">
+        <div class="clr-row clr-justify-content-center" style="padding: 24px;">
+            <div class="clr-col-lg-8 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                <h1
+                    style="text-align: center;font-size: 2.2rem;font-weight: 200;font-family: 'Orbitron';letter-spacing: .1rem">
+                    DATA PROCESSOR v2.3</h1>
+                <h4 style="text-align: center;font-size: .9rem;font-weight: 200;">Extraction, organization and
+                    simplified presentation of
+                    your data, to expediate troubleshooting and data analysis.</h4>
+                <h6 style="text-align: center">A one stop solution to
+                    interpret all your data files. We interpret, analyze and organize your data, for you!</h6>
+                <div class="clr-row  clr-justify-content-center" style="padding-top: 24px;padding-left: 24px;">
+                    <button class="btn btn-primary" (click)="goToProfileConfig()">Profile Manager 
+                    </button>
+                    <button class="btn btn-success-outline" (click)="goToDocumentation()">Documentation</button>
+                </div>
+                <div class="clr-row" style="padding-top: 24px;padding-left: 24px;">
+                    <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                        <div class="card"
+                            style="justify-content: center;background-color: rgba(155, 86, 65, 0.1);max-width: 450px;">
+                            <div class="card-block">
+                                <div class="card-title" style="font-family: 'orbitron';letter-spacing: 1.2em;text-align: center;">
+                                    HOTPIE
+                                </div>
+                                <div class="card-text">
+                                    <div class="clr-row">
+                                        <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                            <div class="clr-form-control">
+                                                <label class="clr-control-label">Data selection mode</label>
+                                                <div class="clr-control-container clr-control-inline">
+                                                    <div class="clr-toggle-wrapper">
+                                                        <label for="toggle" class="clr-control-label">Raw</label>
+                                                        <input type="checkbox" id="toggle" name="isUpload"
+                                                            [(ngModel)]="isUpload" (change)="changeSelectionMode()"
+                                                            class="clr-toggle" />
+                                                        <label for="toggle" class="clr-control-label">Upload</label>
+                                                    </div>
+                                                    <div class="clr-subtext-wrapper">
+                                                        <clr-icon class="clr-validate-icon" shape="exclamation-circle">
+                                                        </clr-icon>
+                                                        <span class="clr-subtext"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form clrForm>
+                                        <div *ngIf="isUpload" class="clr-row">
+                                            <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                                <label
+                                                    style="font-weight: bolder;font-size: small;text-align: left;padding-left: 0%;color: black;">
+                                                    Data File</label>
+                                            </div>
+                                            <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                                <label for="dataFile" class="btn btn-primary btn-block">
+                                                    Select Data
+                                                    <clr-icon *ngIf="dataFileToUpload" shape="check"></clr-icon>
+                                                    <clr-icon *ngIf="!dataFileToUpload" shape="exclamation-triangle">
+                                                    </clr-icon>
+                                                </label>
+                                                <span style="overflow-wrap: break-word;" *ngIf="dataFileToUpload"
+                                                    class="label label-success">{{dataFileToUpload.name}}</span>
+                                                <input style="visibility: hidden;" type="file" id="dataFile"
+                                                    (change)="handleDataFileInput($event.target.files)">
+                                            </div>
+                                        </div>
+                                        <div class="clr-row">
+                                            <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                                <button style="width: 100%;" class="btn btn-success-outline btn-block"
+                                                    (click)="goToProfileConfig()">Create new profile</button>
+                                            </div>
+                                            <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                                <label
+                                                    style="font-weight: bolder;font-size: small;text-align: left;padding-left: 0%;color: black;">
+                                                    Select Profile</label>
+                                            </div>
+                                            <div class="clr-col-lg-12 clr-col-md-12 clr-col-sm-12 clr-col-12">
+                                                <clr-dropdown style="width: 100%;">
+                                                    <button class="btn btn-primary btn-block" *ngIf="profilesToDisplay.length > 0" clrDropdownTrigger>
+                                                        {{selectedProfileLabel}}
+                                                        <clr-icon shape="caret down"></clr-icon>
+                                                    </button>
+                                                    <button class="btn btn-primary btn-block" *ngIf="profilesToDisplay.length === 0" disabled clrDropdownTrigger>
+                                                        {{selectedProfileLabel}}
+                                                        <clr-icon shape="caret down"></clr-icon>
+                                                    </button>
+                                                    <clr-dropdown-menu clrPosition="top-left" *clrIfOpen style="width: 100%;">
+                                                        <label class="dropdown-header clr-col-md-12" aria-hidden="true" style="width: 100%;">Available Profiles</label>
+                                                        <clr-input-container style="padding-right: 12px;padding-left: 12px;margin-top: 0px;">
+                                                            <label *ngIf="false" class="clr-col-md-12">Available Profiles</label>
+                                                            <input clrInput  (ngModelChange)="applyFilter($event)" style="width: 100%;" class="clr-col-md-12" placeholder="Filter from available profiles" name="profileFilter" [(ngModel)]="profileFilter" />
+                                                        </clr-input-container>
+                                                        <div class="dropdown-divider" role="separator" aria-hidden="true"></div>
+                                                        <clr-dropdown>
+                                                            <div class="content-area" style="max-height: 250px;margin: 0px;padding: 0px;">
+                                                            <button  (click)="selectProfile(profile)" *ngFor="let profile of profilesToDisplay" clrDropdownItem>{{profile.profileName}}</button>
+                                                            </div>
+                                                        </clr-dropdown>
+                                                    </clr-dropdown-menu>
+                                                </clr-dropdown>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form *ngIf="!isUpload" (valueChanges)="validateManualData()" clrForm>
+                                        <div class="clr-form-control" style="width: 100%;">
+                                            <div class="clr-control-container" style="width: 100%;">
+                                                <label
+                                                    style="font-weight: bolder;font-size: small;text-align: left;padding-left: 0%;color: black;">
+                                                    Raw Data</label>
+                                                <div class="clr-textarea-wrapper" style="width: 100%;">
+                                                    <textarea name="manualText" style="width: 100%;" rows="5"
+                                                        id="vertical-textarea-basic" [(ngModel)]="inputText"
+                                                        placeholder="Copy and Paste the data here..."
+                                                        class="clr-textarea" (change)="validateManualData()"></textarea>
+                                                    <clr-icon class="clr-validate-icon" shape="exclamation-circle">
+                                                    </clr-icon>
+                                                </div>
+                                                <span class="clr-subtext">Text to Process</span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button [clrLoading]="processBtnState" class="btn btn-primary" type="submit"
+                                    [disabled]="!isDataAvailable || !selectedProfileRow" (click)="submit()">
+                                    Process Data
+                                </button>
+                                <div *ngIf="processingFailed" class="alert alert-danger alert-sm">
+                                    <div class="alert-items">
+                                        <div class="alert-item static" role="alert">
+                                            <div class="alert-icon-wrapper">
+                                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                                            </div>
+                                            <span class="alert-text">
+                                                Data Processing Failed.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                        <clr-timeline class="clr-timeline-vertical"
+                            style="padding-top: 24px;padding-bottom: 24px;align-content: center;">
+                            <clr-timeline-step clrState="current">
+                                <clr-timeline-step-header>Step 1</clr-timeline-step-header>
+                                <clr-timeline-step-title>Upload Raw/File Data</clr-timeline-step-title>
+                                <clr-timeline-step-description>Decide if you want to copy & paste the data here or you
+                                    want to upload the data file directly.</clr-timeline-step-description>
+                            </clr-timeline-step>
+                            <clr-timeline-step clrState="current">
+                                <clr-timeline-step-header>Step 2</clr-timeline-step-header>
+                                <clr-timeline-step-title>Create/Select Profile</clr-timeline-step-title>
+                                <clr-timeline-step-description>
+                                    Create/Select a profile that needs to be applied on the selected data file.
+                                    <button tabindex="-1" class="btn btn-sm" (click)="goToProfileConfig()">Create
+                                        Profile</button>
+                                </clr-timeline-step-description>
+                            </clr-timeline-step>
+                            <clr-timeline-step class="gemini-ignore" clrState="current">
+                                <clr-timeline-step-header>Step 3</clr-timeline-step-header>
+                                <clr-timeline-step-title>Initiate Processing</clr-timeline-step-title>
+                                <clr-timeline-step-description>
+                                    Step back and relax while hotpie analyzes your data and takes you to the analysed
+                                    report.
+                                </clr-timeline-step-description>
+                            </clr-timeline-step>
+                            <clr-timeline-step clrState="success">
+                                <clr-timeline-step-header>Step 4</clr-timeline-step-header>
+                                <clr-timeline-step-title>View your Report</clr-timeline-step-title>
+                                <clr-timeline-step-description>Explore the data and severity reports, to aide your data
+                                    analysis and trouble shooting.
+                                </clr-timeline-step-description>
+                            </clr-timeline-step>
+                        </clr-timeline>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background-color: hsl(198, 100%, 15%);">
+        <h5 style="text-align: right;padding: 24px;color:whitesmoke;font-family: orbitron;letter-spacing:0.25em">
+            &copy;hotpie.tech</h5>
+    </section>
+</clr-main-container>

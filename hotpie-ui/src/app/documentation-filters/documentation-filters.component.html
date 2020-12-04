@@ -1,0 +1,59 @@
+<div class="content-area" style="max-width: 100%;">
+    <section
+        style="padding: 24px;background-blend-mode: lighten;max-width: 100%;">
+            <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">To Include or not to Include...</h1>
+            <h5>If you don't need some of the data, it is just simpler to discard that from your analysis. The flip side
+                to this is also valid. If you are interested in only a single type of data, then why have the rest
+                there.
+            </h5>
+            <h5>We offer two options</h5>
+            <h3>Exclude</h3>
+            <h5>Provide us the pattern for the filter value and the filter value itself, and we will make the data
+                unit vanish.</h5>
+            <h3>Include</h3>
+            <h5>Provide us the pattern for the filter value and the filter value itself, and we will make sure that
+                we include only those data units for you.</h5>
+            <h4><b>Note:</b> What we need to keep in mind here, is that the procesing in done in a pipeline. This means that that if
+                you have added two filters, then the result of the first filter will be taken as the input for the
+                second.</h4>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div style="word-break: break-all;" class="card-text" [innerText]="rawData">
+            </div>
+        </div>
+        <h5>There are two ways of applying a filter on the above raw data. We either include the data unit based on a filter value or we exclude it.</h5>
+        <h3>Sample Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="sampleRegex">
+            </div>
+        </div>
+        <h3>Filter Value</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="filterValue">
+            </div>
+        </div>
+        <h3>Include</h3>
+        <h5>Only the following data units will be propagated to the next processor in the chain.</h5>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="includedSample">
+            </div>
+        </div>
+        <h3>Exclude</h3>
+        <h5>Only the following data units will be propagated to the next processor in the chain.</h5>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="excludedSample">
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/filter-config.png">
+        </div>
+    </section>
+</div>

@@ -1,0 +1,435 @@
+<clr-wizard #wizard [(clrWizardOpen)]="openWizard" [clrWizardClosable]="false">
+    <clr-wizard-title>Processor Pipeline Profile</clr-wizard-title>
+
+    <clr-wizard-button [type]="'cancel'" (click)="onCancel()">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'" (click)="onNext()">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'" (click)="onSave()">Save</clr-wizard-button>
+
+    <clr-wizard-page *ngIf="isManage" [clrWizardPageNextDisabled]="!profileFileToUpload">
+        <ng-template clrPageTitle>Manage processor Pipeline Profile</ng-template>
+        <form clrForm style="width: 100%;">
+            <p>Select the existing profile to manage</p>
+            <label for="profileFile" class="btn btn-primary">
+                Select Profile
+                <clr-icon *ngIf="profileFileToUpload" shape="check"></clr-icon>
+                <clr-icon *ngIf="!profileFileToUpload" shape="exclamation-triangle">
+                </clr-icon>
+            </label>
+            <span *ngIf="profileFileToUpload" class="label label-success">{{profileFileToUpload.name}}</span>
+            <input style="visibility: hidden;" type="file" id="profileFile"
+                (change)="handleProfileFileInput($event.target.files)">
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page [clrWizardPageNextDisabled]="!(processorProfile.profileName && processorProfile.profileDescription)">
+        <ng-template clrPageTitle>Processor Profile Data</ng-template>
+        <form clrForm style="width: 100%;">
+            <p>Enter Profile details</p>
+            <clr-input-container>
+                <label>Profile Name</label>
+                <input clrInput type="text" [(ngModel)]="processorProfile.profileName" name="profileName" />
+            </clr-input-container>
+            <clr-input-container>
+                <label>Profile Description</label>
+                <input clrInput type="text" [(ngModel)]="processorProfile.profileDescription" name="profileDescription" />
+            </clr-input-container>
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Line Demarcation</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="Line demarcation regex pattern"
+                    name="regexPattern" [(ngModel)]="regexPattern" />
+                <clr-control-helper>The regex pattern that would identify the beginning of a line
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'regexPattern'">Please enter the regex pattern to demarcate a line.
+                </clr-control-error>
+            </clr-control-container>
+            <div style="padding-top: 10px;">
+                <button [disabled]="!regexPattern" class="btn btn-primary btn-sm"
+                    (click)="addLineDemarcationRegex(regexPattern)">Add
+                    Config</button>
+                <button [disabled]="!regexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+
+            <clr-datagrid class="datagrid-compact">
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngIf="processorProfile.lineDemarcation">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{processorProfile.lineDemarcation.lineRegex}}</clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedRegex()">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="regexPattern" groupMatch="false"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Filter Processor</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="Filter regex pattern"
+                    name="filterRegexPattern" [(ngModel)]="filterRegexPattern" />
+                <clr-control-helper>The regex pattern with <b>one "capturing group"</b> that would identify the keyword in the line to be filtered by.
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'filterRegexPattern'">Please enter the regex pattern to filter a
+                    line.
+                </clr-control-error>
+            </clr-control-container>
+            <clr-control-container style="width: 100%;">
+                <clr-checkbox-wrapper>
+                    <input type="checkbox" clrCheckbox value="filterExclude" name="filterCheck"
+                        [(ngModel)]="filterExclude" />
+                    <label>Exclude</label>
+                </clr-checkbox-wrapper>
+            </clr-control-container>
+            <clr-control-container style="width: 100%;">
+                <label>Filter Value</label>
+                <input style="width: 100%;" clrControl placeholder="The value to filter with"
+                    name="filterValue" [(ngModel)]="filterValue" />
+                <clr-control-helper>The value that will be compared with the first group of the regex for filtering
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'filterValue'">Please enter the value to filter with.
+                </clr-control-error>
+            </clr-control-container>
+            <div style="padding-top: 10px;">
+                <button [disabled]="!filterRegexPattern ||  !filterValue" class="btn btn-primary btn-sm"
+                    (click)="addFilterRegex()">Add Config</button>
+                <button [disabled]="!filterRegexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+            <clr-datagrid>
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column>Filter Value</clr-dg-column>
+                <clr-dg-column>Exclude</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngFor="let filter of processorProfile.filters">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{filter.filterRegex}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{filter.filterValue}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{filter.isExclude ? true : false}}</clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedFilter(filter)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-footer *ngIf="processorProfile.filters">{{processorProfile.filters.length}} filters
+                </clr-dg-footer>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="filterRegexPattern" groupMatch="true"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>HighLight Processor</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="Highlighter regex pattern"
+                    name="highlightRegexPattern" [(ngModel)]="highlightRegexPattern" />
+                <clr-control-helper>The regex pattern with <b>one "capturing group"</b> that would identify the keyword in the data to highlight
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'highlightRegexPattern'">Please enter the regex pattern to highlight
+                    content from the
+                    data.
+                </clr-control-error>
+            </clr-control-container>
+            <div style="padding-top: 10px;">
+                <button [disabled]="!highlightRegexPattern" class="btn btn-primary btn-sm"
+                    (click)="addHighlightRegex()">Add Config</button>
+                <button [disabled]="!highlightRegexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+            <clr-datagrid class="datagrid-compact">
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngFor="let highlight of processorProfile.highlights">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{highlight.regex}}</clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedHighlightRegex(highlight)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="highlightRegexPattern" groupMatch="true"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Severity Processor</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="Severity regex pattern"
+                    name="severityRegexPattern" [(ngModel)]="severityRegexPattern" />
+                <clr-control-helper>The regex pattern that would identify the severity of the data entity.
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'severityRegexPattern'">Please enter the regex pattern to set the
+                    severity of the
+                    data entity.
+                </clr-control-error>
+            </clr-control-container>
+            <clr-select-container>
+                <label>Select Severity</label>
+                <select id="select-full" clrSelect name="severity" [(ngModel)]="selectedSeverity">
+                    <option value="HIGH">HIGH</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW">LOW</option>
+                </select>
+                <clr-control-helper>Select the severity to apply to the data entity</clr-control-helper>
+            </clr-select-container>
+            <div style="padding-top: 10px;">
+                <button [disabled]="!severityRegexPattern || !selectedSeverity" class="btn btn-primary btn-sm"
+                    (click)="addSeverityRegex()">Add Config</button>
+                <button [disabled]="!severityRegexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+            <clr-datagrid class="datagrid-compact">
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column>Severity</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngFor="let severity of processorProfile.severities">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{severity.regex}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{severity.severity}}</clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedSeverityRegex(severity)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="severityRegexPattern" groupMatch="false"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Sequential Checkpoint Processor</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="Checkpoint regex pattern"
+                    name="checkpointRegexPattern" [(ngModel)]="checkpointRegexPattern" />
+                <clr-control-helper>The regex pattern that would identify the line to be marked as a checkpoint
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'checkpointRegexPattern'">Please enter the regex pattern to set a
+                    checkpoint.
+                </clr-control-error>
+            </clr-control-container>
+            <clr-control-container style="width: 100%;">
+                <label>Checkpoint Name</label>
+                <input style="width: 100%;" clrControl placeholder="Enter the checkpoint name"
+                    name="checkpointName" [(ngModel)]="checkpointName" />
+                <clr-control-helper>The name for the checkpoint
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'checkpointName'">Please enter the name of the checkpoint.
+                </clr-control-error>
+            </clr-control-container>
+            <clr-control-container style="width: 100%;">
+                <label>Checkpoint Description</label>
+                <input style="width: 100%;" clrControl placeholder="Enter the checkpoint description"
+                    name="checkpointDescription" [(ngModel)]="checkpointDescription" />
+                <clr-control-helper>The description of the checkpoint
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'checkpointDescription'">Please enter the description for the
+                    checkpoint.
+                </clr-control-error>
+            </clr-control-container>
+            <div style="padding-top: 10px;">
+                <button
+                    [disabled]="disableCheckpoint || !checkpointRegexPattern || !checkpointName || !checkpointDescription"
+                    class="btn btn-primary btn-sm" (click)="addCheckpoint()">Add
+                    Config</button>
+                <button [disabled]="!checkpointRegexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+            <clr-datagrid>
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column>Checkpoint Name</clr-dg-column>
+                <clr-dg-column>Checkpoint description</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngFor="let checkpoint of processorProfile.checkpoints">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointIdentificationRegex}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointHeader}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointDescription}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedCheckpoint(checkpoint)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-footer *ngIf="processorProfile.checkpoints">{{processorProfile.checkpoints.length}}
+                    checkpoints
+                </clr-dg-footer>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="checkpointRegexPattern" groupMatch="false"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>GroupBy Processor</ng-template>
+        <form clrForm style="width: 100%;">
+            <clr-control-container style="width: 100%;">
+                <label>Regex</label>
+                <input style="width: 100%;" clrControl placeholder="GroupBy regex pattern"
+                    name="groupByRegexPattern" [(ngModel)]="groupByRegexPattern" />
+                <clr-control-helper>The regex pattern with <b>one "capturing group"</b> that would identify the group in the data entity.
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'groupByRegexPattern'">Please enter the regex pattern to group by.
+                </clr-control-error>
+            </clr-control-container>
+            <clr-control-container style="width: 100%;">
+                <label>Group Name</label>
+                <input style="width: 100%;" clrControl placeholder="Enter the group name" name="groupName"
+                    [(ngModel)]="groupName" />
+                <clr-control-helper>The name for the group
+                </clr-control-helper>
+                <clr-control-error *clrIfError="'groupName'">Please enter the name of the group.
+                </clr-control-error>
+            </clr-control-container>
+            <div style="padding-top: 10px;">
+                <button [disabled]="!groupByRegexPattern || !groupName" class="btn btn-primary btn-sm"
+                    (click)="addGroup()">Add Config</button>
+                <button [disabled]="!groupByRegexPattern" class="btn btn-success-outline btn-sm"
+                    (click)="showRegexValidator()">Validate Regex</button>
+            </div>
+            <clr-datagrid>
+                <clr-dg-column>Selected Regex</clr-dg-column>
+                <clr-dg-column>Group Name</clr-dg-column>
+                <clr-dg-column></clr-dg-column>
+
+                <clr-dg-row *ngFor="let group of processorProfile.groups">
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{group.regex}}</clr-dg-cell>
+                    <clr-dg-cell style="overflow-wrap: break-word;">{{group.name}}</clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-danger-outline btn-sm" (click)="removeSelectedGroup(group)">
+                            <clr-icon shape="trash"></clr-icon>
+                        </button>
+                    </clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-footer *ngIf="processorProfile.groups">{{processorProfile.groups.length}} groups
+                </clr-dg-footer>
+            </clr-datagrid>
+        </form>
+        <app-regextester *ngIf="validateRegex" [regex]="groupByRegexPattern" groupMatch="true"></app-regextester>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Review Config</ng-template>
+        <div class="clr-row">
+            <div class="clr-col-3">
+                <label>Profile Name</label>
+            </div>
+            <div class="clr-col-9">
+                <label>{{processorProfile.profileName}}</label>
+            </div>
+        </div>
+        <div class="clr-row">
+            <div class="clr-col-3">
+                <label>Profile Description</label>
+            </div>
+            <div class="clr-col-9">
+                <label>{{processorProfile.profileDescription}}</label>
+            </div>
+        </div>
+        <clr-datagrid class="datagrid-compact">
+            <clr-dg-column>Selected Regex</clr-dg-column>
+
+            <clr-dg-row *ngIf="processorProfile.lineDemarcation">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{processorProfile.lineDemarcation.lineRegex}}
+                </clr-dg-cell>
+            </clr-dg-row>
+        </clr-datagrid>
+
+        <label>Filters</label>
+        <clr-datagrid>
+            <clr-dg-column>Selected Regex</clr-dg-column>
+            <clr-dg-column>Filter Value</clr-dg-column>
+            <clr-dg-column>Exclude</clr-dg-column>
+
+            <clr-dg-row *ngFor="let filter of processorProfile.filters">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{filter.filterRegex}}</clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{filter.filterValue}}</clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{filter.isExclude}}</clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer *ngIf="processorProfile.filters">{{processorProfile.filters.length}} filters
+            </clr-dg-footer>
+        </clr-datagrid>
+
+        <label>Highlights</label>
+        <clr-datagrid class="datagrid-compact">
+            <clr-dg-column>Selected Regex</clr-dg-column>
+
+            <clr-dg-row *ngFor="let highlight of processorProfile.highlights">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{highlight.regex}}</clr-dg-cell>
+            </clr-dg-row>highlights
+            <clr-dg-footer *ngIf="processorProfile.highlights">{{processorProfile.highlights.length}} highlights
+            </clr-dg-footer>
+        </clr-datagrid>
+
+        <label>Severity</label>
+        <clr-datagrid class="datagrid-compact">
+            <clr-dg-column>Selected Regex</clr-dg-column>
+            <clr-dg-column>Severity</clr-dg-column>
+
+            <clr-dg-row *ngFor="let severity of processorProfile.severities">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{severity.regex}}</clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{severity.severity}}</clr-dg-cell>
+            </clr-dg-row>
+            <clr-dg-footer *ngIf="processorProfile.severities">{{processorProfile.severities.length}} severities
+            </clr-dg-footer>
+        </clr-datagrid>
+
+        <label>Checkpoints</label>
+        <clr-datagrid class="datagrid-compact">
+            <clr-dg-column>Selected Regex</clr-dg-column>
+            <clr-dg-column>Checkpoint Name</clr-dg-column>
+            <clr-dg-column>Checkpoint description</clr-dg-column>
+
+            <clr-dg-row *ngFor="let checkpoint of processorProfile.checkpoints">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointIdentificationRegex}}
+                </clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointHeader}}</clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{checkpoint.checkpointDescription}}</clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer *ngIf="processorProfile.checkpoints">{{processorProfile.checkpoints.length}} checkpoints
+            </clr-dg-footer>
+        </clr-datagrid>
+
+        <label>Groups</label>
+        <clr-datagrid>
+            <clr-dg-column>Selected Regex</clr-dg-column>
+            <clr-dg-column>Group Name</clr-dg-column>
+
+            <clr-dg-row *ngFor="let group of processorProfile.groups">
+                <clr-dg-cell style="overflow-wrap: break-word;">{{group.regex}}</clr-dg-cell>
+                <clr-dg-cell style="overflow-wrap: break-word;">{{group.name}}</clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-footer *ngIf="processorProfile.groups">{{processorProfile.groups.length}} groups
+            </clr-dg-footer>
+        </clr-datagrid>
+
+
+    </clr-wizard-page>
+</clr-wizard>

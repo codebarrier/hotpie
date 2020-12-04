@@ -1,0 +1,39 @@
+<form clrForm style="width: 100%;">
+    <clr-textarea-container>
+        <label>Regex Validator</label>
+        <textarea placeholder="Enter the sample data to test the regex against" style="width: 100%;" clrTextarea [(ngModel)]="sampleData" name="sampleData"></textarea>
+    </clr-textarea-container>
+    <div *ngIf="result">
+        <div *ngFor="let match of result.matchedGroups">
+            <span class="label label-orange">{{match}}</span>
+        </div>
+    </div>
+    <div *ngIf="result && !matchSuccess" class="alert alert-danger" role="alert">
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                </div>
+                <span class="alert-text">
+                    {{matchMessage}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="result && matchSuccess" class="alert alert-success" role="alert">
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                </div>
+                <span class="alert-text">
+                    {{matchMessage}}
+                </span>
+            </div>
+        </div>
+    </div>    
+    <button *ngIf="!result" class="btn btn-primary btn-sm btn-outline" (click)="testRegex()" [disabled]="!sampleData || !regex">Test Regex</button>
+    <button *ngIf="result && matchSuccess" class="btn btn-primary btn-sm btn-success" (click)="testRegex()" [disabled]="!sampleData || !regex">Test Regex</button>
+    <button *ngIf="result && (!matchSuccess)" class="btn btn-primary btn-sm btn-danger" (click)="testRegex()" [disabled]="!sampleData || !regex">Test Regex</button>
+
+</form>

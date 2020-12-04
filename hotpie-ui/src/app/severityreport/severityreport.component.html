@@ -1,0 +1,109 @@
+<!-- This is the severity report block of code -->
+<div class="content-area">
+    <clr-accordion clrAccordionMultiPanel="true">
+        <clr-accordion-panel *ngIf="totalHighRecords.length > 0">
+            <clr-accordion-title>
+                <span
+                    class="badge badge-danger">{{totalHighRecords.length > 99 ? '99+' : totalHighRecords.length}}</span>
+                High</clr-accordion-title>
+            <clr-accordion-content *clrIfExpanded>
+                <clr-datagrid style="height: 100%; width: 100%;">
+                    <clr-dg-column [clrDgField]="'sevRecordHigh'">Data
+                        <clr-dg-string-filter [clrDgStringFilter]="dataFilter"></clr-dg-string-filter>
+                    </clr-dg-column>
+                    <clr-dg-row *clrDgItems="let sevRecordHigh of totalHighRecords" [clrDgItem]="sevRecordHigh">
+                        <clr-dg-cell id="formatted">
+                            <a [routerLink]="['/processedData', 'datareport', totalGroupData[0].groupId, sevRecordHigh.dataId]"
+                                (click)="goToSeverityData(sevRecordHigh)" class="label label-info clickable"
+                                skipLocationChange>
+                                Show</a>
+                            <a (click)="pin(sevRecordHigh)">
+                                <clr-icon style="cursor: pointer;" *ngIf="!sevRecordHigh.pinned || sevRecordHigh.pinned === false"
+                                    class="" shape="pin"></clr-icon>
+                                <clr-icon style="cursor: pointer;" *ngIf="sevRecordHigh.pinned === true" shape="pin"
+                                    class="is-solid is-success"></clr-icon>
+                            </a>
+                            {{sevRecordHigh.data}}</clr-dg-cell>
+                    </clr-dg-row>
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination1 clrDgPageSize="10">
+                            <clr-dg-page-size [clrPageSizeOptions]="[10,25,50,100]">Records per page</clr-dg-page-size>
+                            {{pagination1.firstItem + 1}} - {{pagination1.lastItem + 1}}
+                            of {{pagination1.totalItems}} records
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+                </clr-datagrid>
+            </clr-accordion-content>
+        </clr-accordion-panel>
+
+        <clr-accordion-panel *ngIf="totalMediumRecords.length > 0">
+            <clr-accordion-title>
+                <span
+                    class="badge badge-warning">{{totalMediumRecords.length > 99 ? '99+' : totalMediumRecords.length}}</span>
+                Medium</clr-accordion-title>
+            <clr-accordion-content *clrIfExpanded>
+                <clr-datagrid style="height: 100%; width: 100%;">
+                    <clr-dg-column [clrDgField]="'sevRecordMed'">Data
+                        <clr-dg-string-filter [clrDgStringFilter]="dataFilter"></clr-dg-string-filter>
+                    </clr-dg-column>
+                    <clr-dg-row *clrDgItems="let sevRecordMed of totalMediumRecords" [clrDgItem]="sevRecordMed">
+                        <clr-dg-cell id="formatted">
+                            <a [routerLink]="['/processedData', 'datareport', totalGroupData[0].groupId, sevRecordMed.dataId]"
+                                (click)="goToSeverityData(sevRecordMed)" class="label label-info clickable"
+                                skipLocationChange>
+                                Show</a>
+                            <a (click)="pin(sevRecordMed)">
+                                <clr-icon style="cursor: pointer;" *ngIf="!sevRecordMed.pinned || sevRecordMed.pinned === false"
+                                    class="" shape="pin"></clr-icon>
+                                <clr-icon style="cursor: pointer;" *ngIf="sevRecordMed.pinned === true" shape="pin"
+                                    class="is-solid is-success"></clr-icon>
+                            </a>
+                            {{sevRecordMed.data}}</clr-dg-cell>
+                    </clr-dg-row>
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination2 clrDgPageSize="10">
+                            <clr-dg-page-size [clrPageSizeOptions]="[10,25,50,100]">Records per page</clr-dg-page-size>
+                            {{pagination2.firstItem + 1}} - {{pagination2.lastItem + 1}}
+                            of {{pagination2.totalItems}} records
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+                </clr-datagrid>
+            </clr-accordion-content>
+        </clr-accordion-panel>
+
+        <clr-accordion-panel *ngIf="totalLowRecords.length > 0">
+            <clr-accordion-title>
+                <span class="badge badge-info">{{totalLowRecords.length > 99 ? '99+' : totalLowRecords.length}}</span>
+                Low</clr-accordion-title>
+            <clr-accordion-content *clrIfExpanded>
+                <clr-datagrid style="height: 100%; width: 100%;">
+                    <clr-dg-column [clrDgField]="'sevRecordlow'">Data
+                        <clr-dg-string-filter [clrDgStringFilter]="dataFilter"></clr-dg-string-filter>
+                    </clr-dg-column>
+                    <clr-dg-row *clrDgItems="let sevRecordlow of totalLowRecords" [clrDgItem]="sevRecordlow">
+                        <clr-dg-cell id="formatted">
+                            <a [routerLink]="['/processedData', 'datareport', totalGroupData[0].groupId, sevRecordlow.dataId]"
+                                (click)="goToSeverityData(sevRecordlow)" class="label label-info clickable"
+                                skipLocationChange>
+                                Show</a>
+                            <a (click)="pin(sevRecordlow)">
+                                <clr-icon style="cursor: pointer;" *ngIf="!sevRecordlow.pinned || sevRecordlow.pinned === false"
+                                    class="" shape="pin"></clr-icon>
+                                <clr-icon style="cursor: pointer;" *ngIf="sevRecordlow.pinned === true" shape="pin"
+                                    class="is-solid is-success"></clr-icon>
+                            </a>
+                            {{sevRecordlow.data}}</clr-dg-cell>
+                    </clr-dg-row>
+                    <clr-dg-footer>
+                        <clr-dg-pagination #pagination3 clrDgPageSize="10">
+                            <clr-dg-page-size [clrPageSizeOptions]="[10,25,50,100]">Records per page</clr-dg-page-size>
+                            {{pagination3.firstItem + 1}} - {{pagination3.lastItem + 1}}
+                            of {{pagination3.totalItems}} records
+                        </clr-dg-pagination>
+                    </clr-dg-footer>
+                </clr-datagrid>
+            </clr-accordion-content>
+        </clr-accordion-panel>
+    </clr-accordion>
+</div>
+<!-- severity report block of code ends-->

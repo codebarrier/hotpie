@@ -1,0 +1,40 @@
+<clr-main-container>
+    <div class="content-container">
+        <clr-vertical-nav [clrVerticalNavCollapsible]="true" [clr-nav-level]="2">
+            <a clrVerticalNavLink routerLink="./overview" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="home"></clr-icon>
+                Overview</a>
+            <div class="nav-divider"></div>
+            <a clrVerticalNavLink routerLink="./linedocument" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="bookmark"></clr-icon>
+                Line Demarcation</a>
+            <a clrVerticalNavLink routerLink="./groups" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="node-group"></clr-icon>
+                Group By</a>
+            <a clrVerticalNavLink routerLink="./filters" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="filter-grid-circle"></clr-icon>
+                Filters</a>
+            <a clrVerticalNavLink routerLink="./highlights" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="highlighter"></clr-icon>
+                Highlights</a>
+            <a clrVerticalNavLink routerLink="./checkpoints" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="checkbox-list"></clr-icon>
+                Checkpoints</a>
+            <a clrVerticalNavLink routerLink="./severity" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
+                Severity</a>
+            <div class="nav-divider"></div>
+            <a clrVerticalNavLink routerLink="./privacy" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="user"></clr-icon>
+                Data Privacy and Security</a>
+            <div class="nav-divider"></div>
+        </clr-vertical-nav>
+        <div class="content-area" style="width: 100%;background-blend-mode: lighten;background-repeat: repeat;background-color: rgb(251, 238, 193);">
+            <!-- rgba(223, 240, 208, 0.4) -->
+            <button routerLink="/" type="button" class="btn btn-icon" aria-label="home">
+                <clr-icon shape="home"></clr-icon> BACK
+            </button>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</clr-main-container>

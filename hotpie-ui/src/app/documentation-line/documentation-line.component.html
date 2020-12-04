@@ -1,0 +1,34 @@
+<div class="content-area">
+    <section style="padding: 24px;">
+        <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">Knowing where the line starts</h1>
+        <h5>The first step in starting the analysis of any data is knowing where the first logical entity ends and the
+            next
+            one begins. So thats where we start.</h5>
+        <h5>With your regex pattern, we can clearly demarcate the individual data units that are, in all aspects one.
+        </h5>
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted"
+            style="background-color: white;padding-left: 24px;padding-right: 24px;padding-bottom: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="multilineCode">
+            </div>
+        </div>
+        <h5>The above is an example of how a single unit of information is represented in multiple lines. The regex that
+            you
+            will be providing will identify the individual data units.</h5>
+        <h5>In our example here, we know that a data unit always starts with a timestamp value such as "<b
+                style="color: tomato;">2020-06-04 18:35:12.886</b>".</h5>
+        <h3>Example Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="lineexampleregex">
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/line-config.png">
+        </div>
+    </section>
+</div>

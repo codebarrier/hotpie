@@ -1,0 +1,35 @@
+{
+    "/processDataWithProfile": {
+       "target": "http://localhost:8080",
+       "secure": false
+    },
+    "/processRawDataWithProfile": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+    "/processData": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+   "/getConfigurations": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+   "/testRegex": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+   "/saveProfile": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+   "/deleteProfile": {
+      "target": "http://localhost:8080",
+      "secure": false
+   },
+   "/getAllProfiles": {
+      "target": "http://localhost:8080",
+      "secure": false
+   }
+}
+       

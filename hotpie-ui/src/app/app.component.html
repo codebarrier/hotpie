@@ -1,0 +1,28 @@
+<clr-main-container>
+  <clr-header class="header header-6" style="justify-content: center;">
+    <div class="branding">
+      <a href="./" class="nav-link">
+        <clr-icon shape="pie-chart left" class="is-highlight is-solid has-badge--success"></clr-icon>
+        <span class="title" style="text-align: center;font-family: orbitron;letter-spacing:0.65em">HOTPIE - DATA PROCESSOR</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <a (click)="showScratchPad()" style="cursor: pointer;" role="tooltip" aria-haspopup="true"
+        class="nav-link nav-icon tooltip tooltip-lg tooltip-bottom-left" aria-label="scratch-pad">
+        <clr-icon shape="note" size="36"></clr-icon>
+        <span class="tooltip-content">Note down the things that you want to remember, for later
+          reference.</span>
+      </a>
+  </div>
+  </clr-header>
+  <clr-modal [(clrModalOpen)]="showBoard" [clrModalSize]="'xl'" [clrModalStaticBackdrop]="false">
+    <h3 class="modal-title">Scratch Pad</h3>
+    <div class="modal-body">
+      <textarea placeholder="Anything that you want to remember, note it down here and refer to it later."
+        style="width: 100%;height: 500px;" [(ngModel)]="scratchContent" name="scratchContent"></textarea>
+    </div>
+  </clr-modal>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</clr-main-container>

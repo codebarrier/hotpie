@@ -1,0 +1,88 @@
+<clr-accordion>
+    <clr-accordion-panel [(clrAccordionPanelOpen)]="panelOpen">
+        <clr-accordion-title>Checkpoint Status
+            <clr-icon *ngIf="checkpointSuccess" shape="success-standard" class="is-solid is-success"></clr-icon>
+            <clr-icon *ngIf="!checkpointSuccess" shape="error-standard" class="is-solid is-error"></clr-icon>
+        </clr-accordion-title>
+        <clr-accordion-content *clrIfExpanded>
+            <div class="content-area">
+                <div style="width: 60%;" class="content-container">
+                    <clr-timeline *ngIf="totalGroupData && totalGroupData[0].checkpoints">
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[0]"
+                            [clrState]="totalGroupData[0].checkpoints[0].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[0].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[0].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[0])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[0].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[1]"
+                            [clrState]="totalGroupData[0].checkpoints[1].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[1].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[1].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[1])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[1].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[2]"
+                            [clrState]="totalGroupData[0].checkpoints[2].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[2].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[2].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[2])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[2].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[3]"
+                            [clrState]="totalGroupData[0].checkpoints[3].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[3].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[3].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[3])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[3].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[4]"
+                            [clrState]="totalGroupData[0].checkpoints[4].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[4].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[4].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[4])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[4].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                        <clr-timeline-step *ngIf="totalGroupData[0].checkpoints[5]"
+                            [clrState]="totalGroupData[0].checkpoints[5].checkpointReached ? 'success' : 'error'">
+                            <clr-timeline-step-header>{{totalGroupData[0].checkpoints[5].checkpointHeader}}
+                            </clr-timeline-step-header>
+                            <clr-timeline-step-title>
+                                <button [disabled]="!totalGroupData[0].checkpoints[5].checkpointReached"
+                                    class="btn btn-sm btn-link"
+                                    (click)="goToCheckpointRow(totalGroupData[0].checkpoints[5])">Find</button>
+                            </clr-timeline-step-title>
+                            <clr-timeline-step-description>{{totalGroupData[0].checkpoints[5].checkpointDescription}}
+                            </clr-timeline-step-description>
+                        </clr-timeline-step>
+                    </clr-timeline>
+                </div>
+            </div>
+        </clr-accordion-content>
+    </clr-accordion-panel>
+</clr-accordion>

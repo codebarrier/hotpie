@@ -1,0 +1,73 @@
+<!-- This is the data viewer block of code -->
+<div class="content-area">
+    <input clrInput placeholder="Search the dataset..." name="search" [(ngModel)]="search" />
+    <div class="btn-group" style="padding-top: 10px;">
+        <button class="btn btn-sm btn-icon btn-primary" [disabled]="!search" (click)="onSearch()">
+            <clr-icon shape="search"></clr-icon>
+        </button>
+        <button class="btn btn-sm btn-icon" [disabled]="!search" (click)="onPrevSearch()">
+            <clr-icon shape="caret up"></clr-icon>
+        </button>
+        <button class="btn btn-sm btn-icon" [disabled]="!search" (click)="onNextSearch()">
+            <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <button class="btn btn-sm btn-icon" [disabled]="!search" (click)="onClearSearch()">
+            <clr-icon shape="times"></clr-icon>
+        </button>
+    </div>
+    <span style="padding-left: 10px;" *ngIf="searchStarted && searchEmpty" class="label label-danger">No Results
+        Found</span>
+    <span style="padding-left: 10px;" *ngIf="searchStarted &&  !searchEmpty" class="label label-success">Found
+        Results</span>
+
+    <div class="limit-height">
+        <clr-datagrid style="width: 100%;" (clrDgRefresh)="refresh($event)">
+            <clr-dg-placeholder>We couldn't find any data!</clr-dg-placeholder>
+            <clr-dg-column style="max-width: 95%;" [clrDgField]="'record'">Data
+                <clr-dg-string-filter [clrDgStringFilter]="dataFilter" [(clrFilterValue)]="dataFilter.searchString"></clr-dg-string-filter>
+            </clr-dg-column>
+            <clr-dg-row *clrDgItems="let record of totalRecords" [clrDgItem]="record">
+
+                <clr-dg-cell style="max-width: 95%;" id="formatted">
+                    <span *ngIf="!record.dataSeverity" class="badge badge-success"></span>
+                    <span *ngIf="record.dataSeverity && record.dataSeverity === 'LOW'" class="badge badge-info"></span>
+                    <span *ngIf="record.dataSeverity && record.dataSeverity === 'MEDIUM'"
+                        class="badge badge-warning"></span>
+                    <span *ngIf="record.dataSeverity && record.dataSeverity === 'HIGH'"
+                        class="badge badge-danger"></span>
+                    <a (click)="pin(record)">
+                        <clr-icon style="cursor: pointer;" *ngIf="!record.pinned || record.pinned === false" class=""
+                            shape="pin"></clr-icon>
+                        <clr-icon style="cursor: pointer;" *ngIf="record.pinned === true" shape="pin"
+                            class="is-solid is-success"></clr-icon>
+                    </a>
+                    {{record.data}}</clr-dg-cell>
+            </clr-dg-row>
+
+            <ng-template [(clrIfDetail)]="detailData" let-detail>
+                <clr-dg-detail *clrIfDetail="let record">
+                    <clr-dg-detail-header>
+                        <span *ngIf="!record.dataSeverity" class="badge badge-success"></span>
+                        <span *ngIf="record.dataSeverity && record.dataSeverity === 'LOW'"
+                            class="badge badge-info"></span>
+                        <span *ngIf="record.dataSeverity && record.dataSeverity === 'MEDIUM'"
+                            class="badge badge-warning"></span>
+                        <span *ngIf="record.dataSeverity && record.dataSeverity === 'HIGH'"
+                            class="badge badge-danger"></span>
+                    </clr-dg-detail-header>
+                    <clr-dg-detail-body id="formatted" [innerHTML]="record.data | highlight: search">
+                    </clr-dg-detail-body>
+                </clr-dg-detail>
+            </ng-template>
+
+            <clr-dg-footer>
+                <clr-dg-pagination #pagination [(clrDgPage)]="currentPage" [(clrDgPageSize)]="currentPageSize">
+                    <clr-dg-page-size [clrPageSizeOptions]="[10,25,50,100]">Records per page</clr-dg-page-size>
+                    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                    of {{pagination.totalItems}} records
+                </clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
+    </div>
+</div>
+<!-- Data viewer block of code ends-->

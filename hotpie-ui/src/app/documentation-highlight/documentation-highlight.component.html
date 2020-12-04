@@ -1,0 +1,52 @@
+<div class="content-area" style="max-width: 100%;">
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <div class="clr-row">
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">Attention!! Attention!!</h1>
+                <h5>Often in data, there are some key fundamental values/information that you would want to look at,
+                    right away. To help you highlight and bring out this information, we bring to you, highlights.
+                    Highlights searches the data units for the pattern you configure in the profile and then bring the
+                    matches to you up front so you can check off those aspects of the data.</h5>
+                <h5>We use regex again to identify the aspects of the data units to highlight. Highlights is meant to
+                    bring out a few key words or vital piece of information from the data.
+                </h5>
+                <h5>We realize that there are often times where we would have to highlight more than one type of
+                    keywords from the data units. You can therefore add as many highlights as you seem fit.</h5>
+            </div>
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <div style="margin: auto;">
+                    <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 60%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                        src="../../assets/highlights.png">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="rawData">
+            </div>
+        </div>
+        <h5>Looking at the above data unit, we can assume that I would be interested in which port the server is running on and what version of the server is in play. So, to highlight those specific pieces of information, I would create two highlight processors and configure the appropriate regex there.</h5>
+        <h3>Sample Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="sampleRegex">
+            </div>
+        </div>
+        <h5>The above regex patterns will highlight the below.</h5>
+        <div style="padding-left: 24px;">
+            <li>port(s): 8080 (http)</li>
+            <li>Apache Tomcat/9.0.29</li>
+        </div>
+    </section>
+    <section 
+    style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 60%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/highlight-config.png">
+        </div>
+    </section>
+</div>

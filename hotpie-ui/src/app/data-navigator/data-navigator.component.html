@@ -1,0 +1,39 @@
+<!-- This is the vertical navigation block of code -->
+<div class="content-container" style="height: 100%; width: 100%;">
+    <clr-vertical-nav [clr-nav-level]="2" [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed">
+        <a clrVerticalNavLink skipLocationChange [routerLink]="['severityreport']" (click)="triggerSeverityReport()"
+            routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
+            Severity Report
+        </a>
+        <div class="nav-divider"></div>
+        <a clrVerticalNavLink [routerLink]="['pinboard']" skipLocationChange class="clr-treenode-link"
+            routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="pin"></clr-icon>
+            Pin Board
+        </a>
+        <div *ngIf="totalGroupData[0].groupData">
+            <div class="nav-divider"></div>
+            <clr-vertical-nav-group routerLinkActive="active">
+                <clr-icon shape="node-group" clrVerticalNavIcon></clr-icon>
+                Data Groups
+                <clr-vertical-nav-group-children>
+                    <clr-tree *ngIf="!collapsed" [clrLazy]="true">
+                        <clr-tree-node [(clrExpanded)]="group.expanded"
+                            *clrRecursiveFor="let group of totalGroupData; getChildren: getChildren">
+                            <a [routerLink]="['datareport', group.groupId, '0']" (click)="showSelectedGroup(group)"
+                                class="clr-treenode-link" skipLocationChange [class.active]="group.active">
+                                <span *ngIf="!group.highestSeverity" class="badge badge-success"></span>
+                                <span *ngIf="group.highestSeverity === 'LOW'" class="badge badge-info"></span>
+                                <span *ngIf="group.highestSeverity === 'MEDIUM'" class="badge badge-warning"></span>
+                                <span *ngIf="group.highestSeverity === 'HIGH'" class="badge badge-danger"></span>
+                                {{ group.groupName }}</a>
+                        </clr-tree-node>
+                    </clr-tree>
+                </clr-vertical-nav-group-children>
+            </clr-vertical-nav-group>
+        </div>
+        <div class="nav-divider"></div>
+    </clr-vertical-nav>
+</div>
+<!-- Vertical navigation block of code ends-->

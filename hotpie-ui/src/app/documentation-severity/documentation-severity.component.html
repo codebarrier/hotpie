@@ -1,0 +1,57 @@
+<div class="content-area" style="max-width: 100%;">
+    <section style="padding: 24px;max-width: 100%;">
+        <div class="clr-row">
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">Priority Alert!!!!</h1>
+                <h5>There are certains data units that could be of higher severity than the others. We have
+                    provided a way for you to configure the severities of the data entities based on what you see fit. This
+                    will help us isolate all the data units based on their severities and focus on them before getting to understand the
+                    whollistic context. </h5>
+                <h5>We can categorize the data units into three levels of severities.
+                </h5>
+                <li><span class="badge badge-danger"></span>High</li>
+                <li><span class="badge badge-warning"></span>Medium</li>
+                <li><span class="badge badge-info"></span>LOW</li>
+                <h5>Color coded severity markers are available throughout the system for easier identification and recognition
+                    of the severity of the data unit.</h5>
+            </div>
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <div style="margin: auto;">
+                    <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 60%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                        src="../../assets/groups.png">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="rawData">
+            </div>
+        </div>
+        <h5>A regex to identify a fixed pattern of a certain severity dataunit can be used to identify them. You can
+            also create multiple processors for the same Severity that would be identifying different data units.</h5>
+        <h3>Sample Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="sampleRegex">
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Severity Report</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/severity-report.png">
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/severity-config.png">
+        </div>
+    </section>
+</div>

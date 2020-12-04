@@ -1,0 +1,58 @@
+<div class="content-area" style="max-width: 100%;">
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <div class="clr-row">
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">Grouping Up</h1>
+                <h5>Often in data, there are some data units that belong together and there are others that do not. Here
+                    we
+                    attempt to group those data units based on certain predefined creteria, that we can establish in the
+                    profile. </h5>
+                <h5>We use regex again to identify the parts of the data units that we can use to group them together.
+                </h5>
+                <h5>We realize that there are often times where we would have to group data units more than once and we
+                    therefore being multi level grouping to you.</h5>
+                <h5>You can have <b>groups</b> and <b>subgroups</b></h5>
+            </div>
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12 clr-col-12">
+                <div style="margin: auto;">
+                    <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 60%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                        src="../../assets/groups.png">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="rawData">
+            </div>
+        </div>
+        <h5>Looking at the above data unit, if we were to debug issues in this log file, it would make a lot of sense to
+            follow the code flow on a thread by thread basis. Which means if we were to group all the data units by the
+            thread that wrote them, then we would get what we wanted. So, all we would have to do is to add the regex
+            that retrieves the threadName in these lines and we will have our group.</h5>
+        <h3>Sample Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="sampleRegex">
+            </div>
+        </div>
+        <h5>The above regex will get us a group with 4 elements from the sample data. The data will now be grouped by
+            the thread name and some of the groups will be.</h5>
+        <div style="padding-left: 24px;">
+            <li>main</li>
+            <li>http-nio-8080-exec-1</li>
+            <li>http-nio-8080-exec-2</li>
+            <li>http-nio-8080-exec-4</li>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/group-config.png">
+        </div>
+    </section>
+</div>

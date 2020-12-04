@@ -1,0 +1,119 @@
+<clr-main-container>
+    <section style="background: linear-gradient(to top right, #99ccff 0%, #ffcc99 100%);background-blend-mode: lighten;background-repeat: repeat;padding: 24px;background-blend-mode: lighten;background-color: rgba(255,255,255,0.6)">
+        <button routerLink="/" type="button" class="btn btn-icon" aria-label="home">
+            <clr-icon shape="home"></clr-icon> BACK
+        </button>
+        <div class="clr-row" style="padding: 24px;">
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12">
+                <h1 style="font-size: 2.2rem;font-weight: 200;font-family: 'Orbitron';letter-spacing: .1rem">PROCESSOR PROFILE</h1>
+                <h3 style="font-size: .9rem;font-weight: 200;max-width: 31.2rem;">In order for hotpie to start analyzing
+                    your data, he needs
+                    to know how to interpret your data. How we get him to understand is by creating a pipeline of
+                    processors that
+                    he can execute one after the other and make sense of your data. Therefore the first step is to
+                    create a processor pipeline profile.</h3>
+                <div class="clr-row" style="padding-top: 24px;padding-left: 24px;">
+                    <button class="btn btn-primary" (click)="showCreateProfile()">Create Profile</button>
+                    <label for="profileFile" class="btn btn-primary">
+                        Import
+                    </label>
+                    <button class="btn btn-success-outline" (click)="goToDocumentation()">Documentation</button>
+                </div>
+                <input #myInput style="visibility: hidden;" type="file" id="profileFile"
+                (change)="handleProfileFileInput($event.target.files)">
+                <div *ngIf="importSuccess" class="alert alert-success" role="alert">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">Profile Successfully Imported.</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close" aria-label="Close" (click)="importSuccess = false">
+                        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                    </button>
+                </div>
+                <div *ngIf="importFailure" class="alert alert-danger" role="alert">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">Profile Import Failed.</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close" aria-label="Close" (click)="importFailure = false">
+                        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                    </button>
+                </div>
+                <div *ngIf="deleteSuccess" class="alert alert-success" role="alert">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">Profile Successfully Deleted.</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close" aria-label="Close" (click)="deleteSuccess = false">
+                        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                    </button>
+                </div>
+                <div *ngIf="deleteFailure" class="alert alert-danger" role="alert">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">Profile Delete Failed.</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close" aria-label="Close" (click)="deleteFailure = false">
+                        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                    </button>
+                </div>
+                <div class="limit-height">
+                    <clr-datagrid>
+                        <clr-dg-placeholder>We couldn't find any profiles!</clr-dg-placeholder>
+                        <clr-dg-column [clrDgField]="'profileName'">Profile Name</clr-dg-column>
+                        <clr-dg-column [clrDgField]="'profileDescription'">Profile Description</clr-dg-column>
+                        <clr-dg-row *clrDgItems="let profile of allProfiles" [clrDgItem]="profile">
+                            <clr-dg-action-overflow>
+                                <button class="action-item" (click)="onEdit(profile)">Edit</button>
+                                <button class="action-item" (click)="onDelete(profile)">Delete</button>
+                                <button class="action-item" (click)="onExport(profile)">Export</button>
+                            </clr-dg-action-overflow>
+                            <clr-dg-cell>{{profile.profileName}}</clr-dg-cell>
+                            <clr-dg-cell>{{profile.profileDescription}}</clr-dg-cell>
+                        </clr-dg-row>
+                        <clr-dg-footer>
+                            <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                                <clr-dg-page-size [clrPageSizeOptions]="[10,20]">Profiles per page</clr-dg-page-size>
+                                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                                of {{pagination.totalItems}} profiles
+                            </clr-dg-pagination>
+                        </clr-dg-footer>
+                    </clr-datagrid>
+                </div>
+            </div>
+            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-12">
+                <div class="card" style="background-color: rgba(233, 226, 168, 0.4);">
+                    <div style="font-size: 1.2rem;font-weight: 200;font-family: 'Orbitron';text-align: center;letter-spacing: .2rem;" class="card-header">
+                        THE PROCESSING PIPELINE
+                    </div>
+                    <div class="card-block">
+                        <div style="margin: auto;">
+                            <img style="height: 30rem;display: block;margin-left: auto;margin-right: auto;" src="../../assets/processors.png">
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div *ngIf="showprofileEditor">
+            <app-createprofile [selectedProfile]="selectedProfile" [manageMode]="isManage" (showEditor)="showEditor()"></app-createprofile>
+        </div>
+    </section>    
+</clr-main-container>

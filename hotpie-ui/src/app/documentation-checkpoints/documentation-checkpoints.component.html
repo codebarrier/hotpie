@@ -1,0 +1,45 @@
+<div class="content-area" style="max-width: 100%;">
+    <section
+        style="padding: 24px;background-blend-mode: lighten;max-width: 100%;">
+        <h1 style="text-align: center;font-family: 'orbitron';letter-spacing: .15em;">Stop! who goes there?</h1>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 90%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/checkpoints.png">
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <div class="clr-row">
+            <h5>Whenever we analyze a system where there is an expectation of sequential occurrence of a
+                specific set of events, we can setup a timeline. The timeline helps us visualize the events that have
+                occurred and those which haven't but were expected to.</h5>
+            <h5>We can setup a <b>max of 6 checkpoints</b> for the entire analysis that should help us identify if the
+                data is on track or if there are any reasons for concern.
+            </h5>
+        </div>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h3>Sample Raw Data</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="rawData">
+            </div>
+        </div>
+        <h3>Sample Regex Pattern</h3>
+        <div class="card" id="formatted" style="background-color: white;padding-left: 24px;padding-right: 24px;">
+            <div class="card-text" style="word-break: break-all;" [innerText]="sampleRegex">
+            </div>
+        </div>
+        <h5>The above regex patterns will identify the data unit as a checkpoint. We can include other metadata for a
+            checkpoint such as the <b>checkpoint name</b> and <b>description</b> that will help make the identification of the
+            checkpoint easier.</h5>
+    </section>
+    <section
+        style="padding: 24px;max-width: 100%;">
+        <h2 style="text-align: center;">Profile Configurations</h2>
+        <div style="margin: auto;">
+            <img style="background-blend-mode: lighten;background-color: rgba(107, 182, 248, 0.05);width: 60%;overflow: hidden;display: block;margin-left: auto;margin-right: auto;"
+                src="../../assets/checkpoint-config.png">
+        </div>
+    </section>
+</div>
