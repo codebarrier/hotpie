@@ -12,7 +12,7 @@
         <relativePath />
     </parent>
     <modules>
-        <module>hotpie-server</module>
         <module>hotpie-ui</module>
+        <module>hotpie-server</module>
     </modules>
 </project>
