@@ -1,4 +1,4 @@
-![HOTPIE](https://github.com/codebarrier/hotpie/tree/master/hotpie-ui/src/assets/pie-solid-color-small.png "HOTPIE Data Organizer")
+![HOTPIE](hotpie-ui/src/assets/pie-solid-color-small.png "HOTPIE Data Organizer")
 # H O T P I E -  Data Organizer 
 ---
 [Hotpie HQ](https://hotpie.tech "https://hotpie.tech")
@@ -23,10 +23,10 @@ Organizing _**RAW**_ data into managable information using
 The default port is taken as 8080
 ---
 ### Raw Data
-![RAW Data](https://github.com/codebarrier/hotpie/tree/master/hotpie-ui/src/assets/raw-data.png "Raw Data")
+![RAW Data](hotpie-ui/src/assets/raw-data.png "Raw Data")
 
 ---
 ### Organized Data
-![Organized Data](https://github.com/codebarrier/hotpie/tree/master/hotpie-ui/src/assets/hotpie-1.png "Organized Data")
+![Organized Data](hotpie-ui/src/assets/hotpie-1.png "Organized Data")
 
 ---
