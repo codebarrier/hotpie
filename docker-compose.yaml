@@ -1,0 +1,8 @@
+version: '3'
+services:
+  hotpie-ui:
+    image: 'codebarrier/hotpie-ui:3.0.0'
+    ports:
+      - '8080:80'
+  hotpie-server:
+    image: 'codebarrier/hotpie-server:3.0.0'

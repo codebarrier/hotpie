@@ -4,17 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.codebarrier</groupId>
-        <artifactId>hotpie-parent</artifactId>
-        <version>2.3.0</version>
-    </parent>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.2.RELEASE</version>
+	</parent>
 
+    <groupId>com.codebarrier</groupId>
     <artifactId>hotpie-server</artifactId>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -28,13 +30,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.2.2.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>com.codebarrier</groupId>
-            <artifactId>hotpie-ui</artifactId>
-            <version>${project.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -63,6 +58,13 @@
                             </execution>
                         </executions>
                     </plugin>
+		    <plugin>    
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <configuration>
+		            <source>11</source>
+		            <target>11</target>
+		        </configuration>
+		    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
