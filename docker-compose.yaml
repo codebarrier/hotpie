@@ -6,3 +6,9 @@ services:
       - '8080:80'
   hotpie-server:
     image: 'codebarrier/hotpie-server:3.0.0'
+    volumes:
+      - hotpie:/store
+
+volumes:
+  hotpie:
+

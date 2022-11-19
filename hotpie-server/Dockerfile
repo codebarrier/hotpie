@@ -5,6 +5,9 @@ WORKDIR /usr/code
 
 # Install some depenendencies
 
+COPY ./pom.xml ./
+RUN mvn dependency:resolve
+
 COPY ./ ./
 RUN mvn clean install -DskipTests
 
@@ -12,5 +15,6 @@ RUN mvn clean install -DskipTests
 FROM openjdk:18.0.2.1-jdk
 ARG JAR_FILE=/usr/code/target/*.jar
 COPY --from=built ${JAR_FILE} app.jar
+VOLUME /store
 ENTRYPOINT ["java","-jar","/app.jar"]
 

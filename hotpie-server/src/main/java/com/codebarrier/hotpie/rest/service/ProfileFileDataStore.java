@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProfileFileDataStore implements ProfileDataStore {
 
-    String userHomeDir = System.getProperty("user.home");
+    String userHomeDir = "/store";
     String storeName = "hotpie_datastore";
     Path dataStore = Paths.get(userHomeDir, storeName);
     public Gson gson = new Gson();

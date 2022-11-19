@@ -7,7 +7,7 @@ public class CheckpointConfiguration {
     private String checkpointHeader;
     private String checkpointIdentificationRegex;
     private String checkpointDescription;
-    private Pattern checkPointIdPattern;
+    private transient Pattern checkPointIdPattern;
 
     public String getCheckpointHeader() {
         return checkpointHeader;
